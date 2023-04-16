@@ -12,6 +12,18 @@
   docker_network:
     name: "{{ docker_network_name }}"
 
+- name: Create the files directory
+  file:
+    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
+    state: directory
+    mode: 0700
+
+- name: Create the data directory
+  file:
+    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data"
+    state: directory
+    mode: 0700
+
 - name: Create app container
   docker_container:
     name: "{{ application_name }}"
