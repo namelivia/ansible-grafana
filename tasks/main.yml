@@ -30,6 +30,7 @@
     image: "grafana/grafana:latest"
     restart_policy: "always"
     cleanup: true
+    pull: true
     exposed_ports:
       - 3000
     networks:
