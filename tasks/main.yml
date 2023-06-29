@@ -9,8 +9,8 @@
       - cloudwatch_log_group is defined
       - admin_user is defined
       - admin_password is defined
-      - uid is defined
-      - gid is defined
+      - user is defined
+      - group is defined
 
 - name: Create the dockernetwork
   docker_network:
@@ -21,24 +21,32 @@
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     state: directory
     mode: 0755
+    owner: "{{ user }}"
+    group: "{{ group }}"
 
 - name: Create the data directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data"
     state: directory
     mode: 0755
+    owner: "{{ user }}"
+    group: "{{ group }}"
 
 - name: Create the dashboards directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards"
     state: directory
     mode: 0755
+    owner: "{{ user }}"
+    group: "{{ group }}"
 
 - name: Create the provisioning directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning"
     state: directory
     mode: 0755
+    owner: "{{ user }}"
+    group: "{{ group }}"
 
 - name: Create app container
   docker_container:
@@ -47,7 +55,7 @@
     restart_policy: "always"
     cleanup: true
     pull: true
-    user: "{{uid}}:{{gid}}"
+    user: "{{user}}:{{group}}"
     exposed_ports:
       - 3000
     networks:
