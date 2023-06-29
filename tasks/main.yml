@@ -11,6 +11,8 @@
       - admin_password is defined
       - user is defined
       - group is defined
+      - uid is defined
+      - gid is defined
 
 - name: Create the dockernetwork
   docker_network:
@@ -55,7 +57,7 @@
     restart_policy: "always"
     cleanup: true
     pull: true
-    user: "{{user}}:{{group}}"
+    user: "{{uid}}:{{gid}}"
     exposed_ports:
       - 3000
     networks:
