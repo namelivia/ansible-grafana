@@ -7,6 +7,8 @@
       - docker_network_name is defined
       - cloudwatch_region is defined
       - cloudwatch_log_group is defined
+      - admin_user is defined
+      - admin_password is defined
 
 - name: Create the dockernetwork
   docker_network:
@@ -46,3 +48,5 @@
       VIRTUAL_HOST: "{{ domain_name }}"
       LETSENCRYPT_HOST: "{{ domain_name }}"
       VIRTUAL_PORT: "3000"
+      GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
