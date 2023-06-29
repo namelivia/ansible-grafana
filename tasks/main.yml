@@ -18,25 +18,25 @@
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     state: directory
-    mode: 0700
+    mode: 0755
 
 - name: Create the data directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data"
     state: directory
-    mode: 0700
+    mode: 0755
 
 - name: Create the dashboards directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards"
     state: directory
-    mode: 0700
+    mode: 0755
 
 - name: Create the provisioning directory
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning"
     state: directory
-    mode: 0700
+    mode: 0755
 
 - name: Create app container
   docker_container:
