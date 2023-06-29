@@ -26,6 +26,18 @@
     state: directory
     mode: 0700
 
+- name: Create the dashboards directory
+  file:
+    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards"
+    state: directory
+    mode: 0700
+
+- name: Create the provisioning directory
+  file:
+    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning"
+    state: directory
+    mode: 0700
+
 - name: Create app container
   docker_container:
     name: "{{ application_name }}"
@@ -44,6 +56,8 @@
       awslogs-stream: "{{ application_name }}"
     volumes:
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data:/var/lib/grafana"
+      - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards:/var/grafana/dashboards"
+      - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning:/etc/grafana/provisioning"
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
       LETSENCRYPT_HOST: "{{ domain_name }}"
