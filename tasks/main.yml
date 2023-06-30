@@ -45,16 +45,6 @@
     mode: 0644
     directory_mode: 0775
 
-- name: Copy dashboards folder
-  copy:
-    src: "{{ grafana_config_folder }}/dashboards"
-    dest: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
-    owner: ubuntu
-    group: ubuntu
-    force: true
-    mode: 0644
-    directory_mode: 0775
-
 - name: Create app container
   docker_container:
     name: "{{ application_name }}"
@@ -74,7 +64,6 @@
       awslogs-stream: "{{ application_name }}"
     volumes:
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data:/var/lib/grafana"
-      - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards:/var/grafana/dashboards"
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning:/etc/grafana/provisioning"
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
