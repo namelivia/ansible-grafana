@@ -38,7 +38,7 @@
 - name: Copy provisioning folder
   copy:
     src: "{{ grafana_config_folder }}/provisioning"
-    dest: "{{ hostvars[inventory_hostname].working_directory }}/files"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     owner: ubuntu
     group: ubuntu
     force: true
@@ -48,7 +48,7 @@
 - name: Copy dashboards folder
   copy:
     src: "{{ grafana_config_folder }}/dashboards"
-    dest: "{{ hostvars[inventory_hostname].working_directory }}/files"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     owner: ubuntu
     group: ubuntu
     force: true
