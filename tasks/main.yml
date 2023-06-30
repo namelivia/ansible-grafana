@@ -13,6 +13,7 @@
       - group is defined
       - uid is defined
       - gid is defined
+      - grafana_config_folder is defined
 
 - name: Create the dockernetwork
   docker_network:
@@ -34,21 +35,25 @@
     owner: "{{ user }}"
     group: "{{ group }}"
 
-- name: Create the dashboards directory
-  file:
-    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/dashboards"
-    state: directory
-    mode: 0755
-    owner: "{{ user }}"
-    group: "{{ group }}"
+- name: Copy provisioning folder
+  copy:
+    src: "{{ grafana_config_folder }}/provisioning"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}/files"
+    owner: ubuntu
+    group: ubuntu
+    force: true
+    mode: 0644
+    directory_mode: 0775
 
-- name: Create the provisioning directory
-  file:
-    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning"
-    state: directory
-    mode: 0755
-    owner: "{{ user }}"
-    group: "{{ group }}"
+- name: Copy dashboards folder
+  copy:
+    src: "{{ grafana_config_folder }}/dashboards"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}/files"
+    owner: ubuntu
+    group: ubuntu
+    force: true
+    mode: 0644
+    directory_mode: 0775
 
 - name: Create app container
   docker_container:
