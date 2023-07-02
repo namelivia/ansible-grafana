@@ -35,6 +35,16 @@
     owner: "{{ user }}"
     group: "{{ group }}"
 
+- name: Copy dashboards folder
+  copy:
+    src: "{{ grafana_config_folder }}/dashboards"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data"
+    owner: ubuntu
+    group: ubuntu
+    force: true
+    mode: 0644
+    directory_mode: 0775
+
 - name: Copy provisioning folder
   copy:
     src: "{{ grafana_config_folder }}/provisioning"
