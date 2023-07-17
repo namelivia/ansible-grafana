@@ -67,6 +67,7 @@
       - 3000
     networks:
       - name: "{{ docker_network_name }}"
+      - name: "bridge"
     log_driver: "awslogs"
     log_options:
       awslogs-region: "{{ cloudwatch_region }}"
@@ -81,3 +82,7 @@
       VIRTUAL_PORT: "3000"
       GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
+
+- name: Restart proxy
+  shell: 
+    cmd: docker restart proxy
