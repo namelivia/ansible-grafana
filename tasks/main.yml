@@ -3,7 +3,6 @@
   assert:
     that:
       - application_name is defined
-      - domain_name is defined
       - docker_network_name is defined
       - loki_url is defined
       - admin_user is defined
@@ -64,6 +63,8 @@
     user: "{{uid}}:{{gid}}"
     exposed_ports:
       - 3000
+    published_ports:
+      - "0.0.0.0:{{ host_port }}:3000"
     networks:
       - name: "{{ docker_network_name }}"
       - name: "bridge"
@@ -75,9 +76,6 @@
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data:/var/lib/grafana"
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning:/etc/grafana/provisioning"
     env:
-      VIRTUAL_HOST: "{{ domain_name }}"
-      LETSENCRYPT_HOST: "{{ domain_name }}"
-      VIRTUAL_PORT: "3000"
       GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
 
