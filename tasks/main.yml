@@ -67,7 +67,6 @@
       - "0.0.0.0:{{ host_port }}:3000"
     networks:
       - name: "{{ docker_network_name }}"
-      - name: "bridge"
     log_driver: "loki"
     log_options:
       loki-url: "{{ loki_url }}"
@@ -78,7 +77,3 @@
     env:
       GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
-
-- name: Restart proxy
-  shell: 
-    cmd: docker restart proxy
