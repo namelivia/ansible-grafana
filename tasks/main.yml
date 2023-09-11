@@ -77,3 +77,8 @@
     env:
       GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
+
+# Restart the container so the provisioning changes are picked up
+- name: Restart grafana
+  shell: 
+    cmd: docker restart grafana-app
