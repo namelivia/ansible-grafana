@@ -81,4 +81,4 @@
 # Restart the container so the provisioning changes are picked up
 - name: Restart grafana
   shell: 
-    cmd: docker restart grafana-app
+    cmd: docker restart grafana
