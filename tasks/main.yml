@@ -53,6 +53,15 @@
     mode: 0644
     directory_mode: 0775
 
+- name: Copy configuration file
+  copy:
+    src: "{{ grafana_config_folder }}/grafana.ini"
+    dest: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
+    owner: ubuntu
+    group: ubuntu
+    force: true
+    mode: 0644
+
 - name: Create app container
   docker_container:
     name: "{{ application_name }}"
@@ -74,6 +83,7 @@
     volumes:
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data:/var/lib/grafana"
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/provisioning:/etc/grafana/provisioning"
+      - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/grafana.ini:/etc/grafana/grafana.ini:ro"
     env:
       GF_SECURITY_ADMIN_USER: "{{ admin_user }}"
       GF_SECURITY_ADMIN_PASSWORD: "{{ admin_password }}"
