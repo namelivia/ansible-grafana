@@ -21,7 +21,7 @@
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: "{{ user }}"
     group: "{{ group }}"
 
@@ -29,7 +29,7 @@
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/data"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: "{{ user }}"
     group: "{{ group }}"
 
@@ -40,8 +40,8 @@
     owner: ubuntu
     group: ubuntu
     force: true
-    mode: 0644
-    directory_mode: 0775
+    mode: "0644"
+    directory_mode: "0775"
 
 - name: Copy provisioning folder
   copy:
@@ -50,8 +50,8 @@
     owner: ubuntu
     group: ubuntu
     force: true
-    mode: 0644
-    directory_mode: 0775
+    mode: "0644"
+    directory_mode: "0775"
 
 - name: Copy configuration file
   copy:
@@ -60,16 +60,16 @@
     owner: ubuntu
     group: ubuntu
     force: true
-    mode: 0644
+    mode: "0644"
 
 - name: Create app container
   docker_container:
     name: "{{ application_name }}"
-    image: "grafana/grafana:10.1.1"
+    image: "grafana/grafana:10.3.1"
     restart_policy: "always"
     cleanup: true
     pull: true
-    user: "{{uid}}:{{gid}}"
+    user: "{{ uid }}:{{ gid }}"
     exposed_ports:
       - 3000
     published_ports:
@@ -90,5 +90,6 @@
 
 # Restart the container so the provisioning changes are picked up
 - name: Restart grafana
-  shell: 
-    cmd: docker restart grafana
+  command: docker restart grafana-app
+  register: restart_grafana_result
+  changed_when: restart_grafana_result.rc != 0
