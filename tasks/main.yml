@@ -90,6 +90,6 @@
 
 # Restart the container so the provisioning changes are picked up
 - name: Restart grafana
-  command: docker restart grafana-app
+  command: docker restart grafana
   register: restart_grafana_result
   changed_when: restart_grafana_result.rc != 0
